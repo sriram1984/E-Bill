@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import ExcelUploader from "../components/ExcelUploader";
 import LogoutButton from "../components/LogoutButton";
 import { redirect } from "next/navigation";
+import ShowTableData from "../components/ShowTableData";
 
 export default function Dashboard({ children }: { children: React.ReactNode }) {
   async function handleLogout() {
@@ -14,11 +15,13 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-gray-100">
         <nav className="bg-white px-6 py-4 shadow flex justify-between items-center">
           <span className="text-xl font-semibold">My Dashboard</span>
+          <ExcelUploader />
           <LogoutButton action={handleLogout} />
         </nav>
         <main className="p-6">{children}</main>
         <div className="p-8 min-h-screen bg-gray-50">
-          <ExcelUploader />
+          {/* <ExcelUploader /> */}
+          <ShowTableData />
         </div>
       </div>
     </>

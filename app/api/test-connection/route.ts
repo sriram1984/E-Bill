@@ -1,11 +1,13 @@
-import clientPromise from '@/lib/mongodb';
+//import clientPromise from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
+import dbConnect from '@/lib/mongodb';
 
 export async function GET() {
   try {
-    const client = await clientPromise;
+    const client = await dbConnect();
     const db = client.db(process.env.MONGODB_DB);
     const collections = await db.collections();
+    console.log('??',client)
 
     return NextResponse.json({
       success: true,

@@ -1,14 +1,15 @@
 // app/api/upload/route.ts
 
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+//import clientPromise from '@/lib/mongodb';
+import dbConnect from '@/lib/mongodb';
+import mongoose from 'mongoose';
 
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB);
+    await dbConnect(); // Sets up connection
+    const db = mongoose.connection; 
     const collection = db.collection('excel_data');
 
     const result = await collection.insertMany(data);
@@ -19,3 +20,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: 'Upload failed' }, { status: 500 });
   }
 }
+
+

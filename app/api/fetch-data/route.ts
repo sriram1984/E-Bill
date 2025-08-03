@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+// import clientPromise from '@/lib/mongodb';
+import dbConnect from '@/lib/mongodb';
+import mongoose from 'mongoose';
 
 export async function GET() {
   try {
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB);
+    await dbConnect(); // Sets up connection
+    const db = mongoose.connection; 
     const collection = db.collection('excel_data'); // or your collection name
-
+    console.log('collection')
     const data = await collection.find({}).toArray();
 
     return NextResponse.json({ success: true, data });
